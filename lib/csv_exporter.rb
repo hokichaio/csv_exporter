@@ -1,12 +1,19 @@
 require 'csv'
 require 'nkf'
+require 'i18n'
+
+I18n.load_path += Dir[
+  File.join(File.dirname(__FILE__), 'locale', '*.yml')
+]
   
 class CsvExporter
   
   def self.export_by_line(data, headers, options = {})
+    options[:nkf] ||= "-s"
+    options[:charset] ||= "Shift_JIS"
     headers["Cache-Control"] ||= "no-cache"
     headers["Transfer-Encoding"] = "chunked"
-    headers.merge!('Content-Type' => "text/csv; charset=Shift_JIS",'Content-Disposition' => "attachment; filename=\"#{data.model}_#{Time.now}.csv\"")
+    headers.merge!('Content-Type' => "text/csv; charset=#{options[:charset]}",'Content-Disposition' => "attachment; filename=\"#{data.model}_#{Time.now}.csv\"")
     return Rack::Chunked::Body.new(Enumerator.new do |y|
       begin
         human_name = []
@@ -17,8 +24,7 @@ class CsvExporter
             human_name << data.model.human_attribute_name(column_name)
           end
         end
-        
-        y << NKF::nkf("-s", CSV.generate_line(human_name))
+        y << NKF::nkf(options[:nkf], CSV.generate_line(human_name))
         data.find_each do |row|
           if options[:structure].present?
             output_row = []
@@ -28,13 +34,13 @@ class CsvExporter
               rescue
               end
             end
-            y << NKF::nkf("-s", CSV.generate_line(output_row))
+            y << NKF::nkf(options[:nkf], CSV.generate_line(output_row))
           else
-            y << NKF::nkf("-s", CSV.generate_line(row.attributes.values))
+            y << NKF::nkf(options[:nkf], CSV.generate_line(row.attributes.values))
           end
         end
       rescue => e
-        y << NKF::nkf("-s", "データの破損を検知しました、このデータを破棄してください。\n")
+        y << NKF::nkf(options[:nkf], I18n.t("csv_exporter.file_corrupted") + "\n")
         y << "#{e}: #{e.message}\n"
       end
     end)

@@ -26,6 +26,13 @@ self.response_body = CsvExporter.export_by_line(@posts, headers, :structure => [
 
 CsvExporter will look up your I18n file for column names.
 
+## options
+
+```ruby
+nkf #string, CsvExporter use NKF for csv file encoding, the default value is "-s"
+charset #string, default is Shift_JIS 
+```
+
 ## Copyright
 
 Copyright &copy; 2011-2015 [Kevin Tsai](http://www.facebook.com/hokichaio)

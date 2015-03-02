@@ -1,0 +1,3 @@
+ja:
+  csv_exporter:
+    file_corrupted: データの破損を検知しました、このデータを破棄してください。
