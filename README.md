@@ -28,9 +28,15 @@ use the following option
 self.response_body = CsvExporter.export_by_line(@posts, headers, :structure => ["id", "author.id", "author.name"])
 ```
 
+or you can append extra nested columns by using the :append option
+
+```ruby
+self.response_body = CsvExporter.export_by_line(@posts, headers, :append => ["author.id", "author.name"])
+```
+
 CsvExporter will look up your i18n file for column names.
 
-## Options
+## Other options
 
 ```ruby
 :nkf #string, CsvExporter use NKF for csv file encoding, the default value is "-s"

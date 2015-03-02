@@ -18,6 +18,7 @@ class CsvExporter
       begin
         options[:include_column_names] ||= true 
         data.find_each do |row|
+          #create column name
           if options[:include_column_names]
             human_name = []
             if options[:structure].present?
@@ -26,13 +27,19 @@ class CsvExporter
               end
             else
               human_name.concat I18n.t(row.attributes.keys, :scope => [:activerecord, :attributes, data.model.table_name.singularize])
+              if options[:append].present?
+                options[:append].each do |a|
+                  human_name << I18n.t(a, :scope => [:activerecord, :attributes, data.model.table_name.singularize], :default => a)
+                end
+              end
             end
             options[:include_column_names] = false
             y << NKF::nkf(options[:nkf], CSV.generate_line(human_name))
           end
           
+          #create data
+          output_row = []
           if options[:structure].present?
-            output_row = []
             options[:structure].each do |s|
               begin
                 output_row << s.split(".").inject(row){|obj, met| obj.send(met)}
@@ -40,10 +47,15 @@ class CsvExporter
                 output_row << ""
               end
             end
-            y << NKF::nkf(options[:nkf], CSV.generate_line(output_row))
           else
-            y << NKF::nkf(options[:nkf], CSV.generate_line(row.attributes.values))
+            output_row = row.attributes.values
+            if options[:append].present?
+              options[:append].each do |a|
+                output_row << a.split(".").inject(row){|obj, met| obj.send(met)}
+              end
+            end
           end
+          y << NKF::nkf(options[:nkf], CSV.generate_line(output_row))
         end
       rescue => e
         y << NKF::nkf(options[:nkf], I18n.t("csv_exporter.file_corrupted") + "\n")
