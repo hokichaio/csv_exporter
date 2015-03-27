@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'csv_exporter'
-  s.version     = '0.0.4'
+  s.version     = '0.0.5'
   s.date        = '2015-03-01'
   s.summary     = "csv exporter"
   s.description = "An easiy csv exporter for activerecord"

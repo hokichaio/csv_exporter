@@ -13,15 +13,15 @@ Example:
 Use the following script in your controller
 
 ```ruby
-self.response_body = CsvExporter.export_by_line(@posts, headers) 
-#args => 
+self.response_body = CsvExporter.export_by_line(@posts, headers)
+#args =>
   #data => data array of model
   #headers => response headers
   #options => optional
 ```
 
 CvsExporter will output all columns in the model for default.
-If you want to include nested models, or construct yoru own csv structure.
+If you want to include nested models, or construct your own csv structure.
 use the following option
 
 ```ruby
@@ -41,7 +41,7 @@ CsvExporter will look up your i18n file for column names.
 ```ruby
 :nkf #string, CsvExporter use NKF for csv file encoding, the default value is "-s"
 :charset #string, default is "Shift_JIS"
-:include_column_names #boolean, output column name in first row, default is true 
+:include_column_names #boolean, output column name in first row, default is true
 ```
 
 ## Copyright
