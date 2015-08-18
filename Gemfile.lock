@@ -1,0 +1,36 @@
+PATH
+  remote: .
+  specs:
+    csv_exporter (0.0.5)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    diff-lcs (1.2.5)
+    i18n (0.7.0)
+    rake (10.4.2)
+    rspec (3.3.0)
+      rspec-core (~> 3.3.0)
+      rspec-expectations (~> 3.3.0)
+      rspec-mocks (~> 3.3.0)
+    rspec-core (3.3.2)
+      rspec-support (~> 3.3.0)
+    rspec-expectations (3.3.1)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.3.0)
+    rspec-mocks (3.3.2)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.3.0)
+    rspec-support (3.3.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  csv_exporter!
+  i18n
+  rake
+  rspec
+
+BUNDLED WITH
+   1.10.5
