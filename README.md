@@ -1,4 +1,4 @@
-# CsvExporter
+# CsvExporter [![Build Status](https://travis-ci.org/hokichaio/csv_exporter.svg?branch=master)](https://travis-ci.org/hokichaio/csv_exporter)
 
 ## Install
 
